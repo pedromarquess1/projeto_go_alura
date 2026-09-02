@@ -29,8 +29,11 @@ jobs:
     - name: Inicia Banco
       run: docker compose up -d postgres
 
-    - name: Lint
-      run: docker run --rm -it -v ${pwd}:/app -w /app golangci/golangci-lint golangci-lint run controllers/ database/ models/ routes/
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v9
+      with:
+          version: v2.13
+          args: controllers/ database/ models/ routes/
 
     - name: Test
       run: go test -v main_test.go
